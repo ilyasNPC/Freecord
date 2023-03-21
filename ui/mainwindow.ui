@@ -148,7 +148,7 @@
              </rect>
             </property>
             <property name="text">
-             <string>Wapadaper</string>
+             <string>ilyasNPC</string>
             </property>
            </widget>
            <widget class="QLabel" name="label_6">
