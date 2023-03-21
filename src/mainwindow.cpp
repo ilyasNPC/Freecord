@@ -60,9 +60,7 @@ void MainWindow::populate()
             if(name.contains(first)) {
                 name = QString(first).repeated(30);
             }
-
-            //item->setData(0, Qt::TextWrapRole, true);
-            item->setData(0, Qt::TextWordWrap, QVariant(Qt::TextWrapAnywhere));
+            //item->setData(0, Qt::TextWordWrap, QVariant(Qt::TextWrapAnywhere));
         }
 
 
