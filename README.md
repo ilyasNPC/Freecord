@@ -1,5 +1,5 @@
 # Freecord
-Freecord is a application that has features like discord and teamspeak, but the ui is more like teamspeak
+Freecord is planned to become an application that has features like discord and teamspeak, but the ui is more like teamspeak
 
 <img src="https://github.com/cake1338/Freecord/blob/main/screenshots/Freecord_2023-03-21.png" height="500"><br>
 
