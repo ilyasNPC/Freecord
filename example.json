@@ -1,0 +1,61 @@
+[
+  {
+    "type": 2,
+    "name": "Lobby",
+    "children": []
+  },
+  {
+    "type": 2,
+    "name": "AFK",
+    "children": []
+  },
+  {
+    "type": 1,
+    "name": "━",
+    "children": []
+  },
+  {
+    "type": 3,
+    "name": "Public Rooms",
+    "children": [
+      {
+        "type": 2,
+        "name": "Room #1",
+        "children": [
+          {
+            "type": 0,
+            "name": "ilyasNPC",
+            "children": []
+          },
+          {
+            "type": 0,
+            "name": "krypeeeen",
+            "children": []
+          }
+        ]
+      },
+      {
+        "type": 2,
+        "name": "Room #2",
+        "children": []
+      }
+    ]
+  },
+  {
+    "type": 3,
+    "name": "Private Rooms",
+    "children": [
+      {
+        "type": 2,
+        "name": "ilyasNPC",
+		"password": "123",
+        "children": []
+      },
+      {
+        "type": 2,
+        "name": "Kryparn97",
+        "children": []
+      }
+    ]
+  }
+]

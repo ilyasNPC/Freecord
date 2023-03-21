@@ -2,6 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPixmap>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,11 +22,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void populate();
+    void populateTreeWidget(QTreeWidgetItem* parentItem, const QJsonArray& json_array);
+    //void fillTreeWidget(QTreeWidget* treeWidget, QByteArray json_data);
+    //void fillTreeWidgetRecursively(QTreeWidgetItem* parentItem, const QJsonArray& childrenArray);
+
 private slots:
     void on_actionQuit_triggered();
-
     void on_actionAbout_Qt_triggered();
-
     void on_actionConnect_triggered();
 
 private:

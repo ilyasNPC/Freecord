@@ -3,7 +3,8 @@
 #include "dialogaboutqt.h"
 #include "dialogconnect.h"
 
-#include <QPixmap>
+#include <QChar>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,18 +12,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->treeWidget->clear();
+    populate();
+    ui->treeWidget->expandAll();
+
     QPixmap pix("..\\imgs\\LeikaMiniBanner.png"); // Default logo for now, later change it to custom for servers
     pix.scaled(100, 100, Qt::KeepAspectRatio);
     ui->banner->setPixmap(pix);
 
     QPixmap pix1("..\\imgs\\icons\\avatar.png");
-    pix1.scaled(50, 50, Qt::KeepAspectRatio);
+    pix1 = pix1.scaled(40, 40, Qt::KeepAspectRatio);
     ui->avatar->setPixmap(pix1);
 
     QPixmap pix2("..\\imgs\\icons\\online.png");
-    pix2.scaled(29, 29, Qt::KeepAspectRatio);
+    pix2 = pix2.scaled(14, 14, Qt::KeepAspectRatio);
     ui->status->setPixmap(pix2);
-
 
     //ui->label_5->setText("");
 }
@@ -32,21 +36,97 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_actionQuit_triggered()
+void MainWindow::populate()
 {
-    this->close();
+    QFile file("..\\example.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+
+
+
+    QJsonArray json_array = json_doc.array();
+    for (const QJsonValue& json_value : json_array) {
+        QJsonObject json_obj = json_value.toObject();
+        QString name = json_obj.value("name").toString();
+        int type = json_obj.value("type").toInt();
+
+        QTreeWidgetItem* item = new QTreeWidgetItem();
+
+        if (type == 1) {
+            QChar first = name.at(0);
+            if(name.contains(first)) {
+                name = QString(first).repeated(30);
+            }
+
+            //item->setData(0, Qt::TextWrapRole, true);
+            item->setData(0, Qt::TextWordWrap, QVariant(Qt::TextWrapAnywhere));
+        }
+
+
+        item->setText(0, name);
+
+        //item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextFlag::TextWrapAnywhere);
+        switch (type) {
+            case 0: item->setIcon(0, QIcon("../imgs/icons/nottalking.png")); break;
+            case 2: {
+
+                    if(json_obj.value("password").toString().length() > 2) {
+                        item->setIcon(0, QIcon("../imgs/icons/891399_30.png"));
+                    } else {
+                        item->setIcon(0, QIcon("../imgs/icons/2058142_30.png"));
+                    }
+                    break;
+            }
+            case 3: item->setIcon(0, QIcon("../imgs/icons/7183999_30.png")); break;
+        }
+        if (json_obj.contains("children")) {
+            QJsonArray children = json_obj.value("children").toArray();
+            populateTreeWidget(item, children);
+        }
+        ui->treeWidget->addTopLevelItem(item);
+    }
 }
 
+void MainWindow::populateTreeWidget(QTreeWidgetItem* parentItem, const QJsonArray& json_array) {
+    for (const QJsonValue& json_value : json_array) {
+        QJsonObject json_obj = json_value.toObject();
+        QString name = json_obj.value("name").toString();
+        int type = json_obj.value("type").toInt();
+        QTreeWidgetItem* item = new QTreeWidgetItem(parentItem);
+        //item->setFlags(item->flags() | Qt::ItemIsTristate);
+        item->setText(0, name);
+        switch (type) {
+            case 0: item->setIcon(0, QIcon("../imgs/icons/nottalking.png")); break;
+            //case 1: item->setIcon(0, QIcon("../imgs/icons/online_s.png")); break;
+            case 2: {
 
+                    if(json_obj.value("password").toString().length() > 2) {
+                        item->setIcon(0, QIcon("../imgs/icons/891399_30.png"));
+                    } else {
+                        item->setIcon(0, QIcon("../imgs/icons/2058142_30.png"));
+                    }
+                    break;
+            }
+            case 3: item->setIcon(0, QIcon("../imgs/icons/7183999_30.png")); break;
+
+        }
+        if (json_obj.contains("children")) {
+            QJsonArray children = json_obj.value("children").toArray();
+            populateTreeWidget(item, children);
+        }
+    }
+}
+
+void MainWindow::on_actionQuit_triggered() { this->close(); }
 void MainWindow::on_actionAbout_Qt_triggered()
 {
     DialogAboutQt daqt;
     daqt.setModal(true);
     daqt.exec();
 }
-
-
 void MainWindow::on_actionConnect_triggered()
 {
     DialogConnect dacon;

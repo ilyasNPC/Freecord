@@ -39,7 +39,7 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QFrame#frame {
-	background-color: #fff;
+	background-color: rgb(130, 135, 144);
 	border: 1px solid rgb(130, 135, 144);
 }</string>
         </property>
@@ -51,7 +51,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>2</number>
+          <number>1</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -75,7 +75,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">QFrame#frame_5 {
-	border-bottom: 1px solid rgb(130, 135, 144);
+	background-color: #fff;
 }</string>
            </property>
            <property name="frameShape">
@@ -220,6 +220,15 @@
            <property name="headerHidden">
             <bool>false</bool>
            </property>
+           <property name="expandsOnDoubleClick">
+            <bool>false</bool>
+           </property>
+           <attribute name="headerVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="headerShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
            <column>
             <property name="text">
              <string>Leika | Freecord</string>
@@ -233,38 +242,66 @@
             <property name="text">
              <string>Lobby</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
+            </property>
            </item>
            <item>
             <property name="text">
              <string>AFK</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
+            </property>
            </item>
            <item>
             <property name="text">
-             <string>----------</string>
+             <string>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</string>
             </property>
            </item>
            <item>
             <property name="text">
              <string>Public Rooms</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../imgs/icons/7183999_30.png</normaloff>../imgs/icons/7183999_30.png</iconset>
+            </property>
             <item>
              <property name="text">
               <string>Room #1</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
              </property>
             </item>
             <item>
              <property name="text">
               <string>Room #2</string>
              </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
+             </property>
              <item>
               <property name="text">
-               <string>Wapadaper</string>
+               <string>ilyasNPC</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../imgs/icons/nottalking.png</normaloff>../imgs/icons/nottalking.png</iconset>
               </property>
              </item>
              <item>
               <property name="text">
                <string>Kryparn</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../imgs/icons/talking.png</normaloff>../imgs/icons/talking.png</iconset>
               </property>
              </item>
             </item>
@@ -272,25 +309,41 @@
              <property name="text">
               <string>Room #3</string>
              </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
+             </property>
             </item>
            </item>
            <item>
             <property name="text">
-             <string>----------</string>
+             <string>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</string>
             </property>
            </item>
            <item>
             <property name="text">
              <string>Private Rooms</string>
             </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../imgs/icons/7183999_30.png</normaloff>../imgs/icons/7183999_30.png</iconset>
+            </property>
             <item>
              <property name="text">
               <string>Wapadapers</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../imgs/icons/891399_30.png</normaloff>../imgs/icons/891399_30.png</iconset>
              </property>
             </item>
             <item>
              <property name="text">
               <string>Freecord team</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../imgs/icons/2058142_30.png</normaloff>../imgs/icons/2058142_30.png</iconset>
              </property>
             </item>
            </item>
@@ -423,7 +476,7 @@
               <item row="1" column="1">
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>Wapadaper</string>
+                 <string>ilyasNPC</string>
                 </property>
                </widget>
               </item>
@@ -483,7 +536,7 @@
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
-            <string>Leika Community</string>
+            <string>Leika | Freecord</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
@@ -598,7 +651,8 @@ hr { height: 1px; border-width: 0; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionMute"/>
+   <addaction name="actionMic"/>
+   <addaction name="actionSpeaker"/>
   </widget>
   <action name="actionConnect">
    <property name="text">
@@ -655,13 +709,36 @@ hr { height: 1px; border-width: 0; }
     <string>Visit our website</string>
    </property>
   </action>
-  <action name="actionMute">
+  <action name="actionMic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
-     <normaloff>../imgs/icons/muted.png</normaloff>../imgs/icons/muted.png</iconset>
+     <normaloff>../imgs/icons/mic.png</normaloff>
+     <normalon>../imgs/icons/mic_off.png</normalon>../imgs/icons/mic.png</iconset>
    </property>
    <property name="text">
-    <string>Mute</string>
+    <string>Microphone</string>
+   </property>
+   <property name="toolTip">
+    <string>Turn Mic On/Off</string>
+   </property>
+  </action>
+  <action name="actionSpeaker">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../imgs/icons/speaker.png</normaloff>
+     <normalon>../imgs/icons/speaker_off.png</normalon>../imgs/icons/speaker.png</iconset>
+   </property>
+   <property name="text">
+    <string>Speaker</string>
+   </property>
+   <property name="toolTip">
+    <string>Turn Sound On/Off</string>
    </property>
   </action>
  </widget>
