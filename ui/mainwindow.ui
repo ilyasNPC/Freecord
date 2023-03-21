@@ -226,6 +226,9 @@
            <attribute name="headerVisible">
             <bool>true</bool>
            </attribute>
+           <attribute name="headerCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
            <attribute name="headerShowSortIndicator" stdset="0">
             <bool>false</bool>
            </attribute>
@@ -236,6 +239,11 @@
             <property name="icon">
              <iconset>
               <normaloff>../imgs/icons/server.png</normaloff>../imgs/icons/server.png</iconset>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Roles</string>
             </property>
            </column>
            <item>
@@ -653,6 +661,8 @@ hr { height: 1px; border-width: 0; }
    </attribute>
    <addaction name="actionMic"/>
    <addaction name="actionSpeaker"/>
+   <addaction name="actionAFK"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionConnect">
    <property name="text">
@@ -739,6 +749,18 @@ hr { height: 1px; border-width: 0; }
    </property>
    <property name="toolTip">
     <string>Turn Sound On/Off</string>
+   </property>
+  </action>
+  <action name="actionAFK">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../imgs/icons/AFK_50.png</normaloff>../imgs/icons/AFK_50.png</iconset>
+   </property>
+   <property name="text">
+    <string>AFK</string>
    </property>
   </action>
  </widget>
