@@ -32,6 +32,8 @@ private slots:
     void on_actionAbout_Qt_triggered();
     void on_actionConnect_triggered();
 
+    void on_textBox_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 };

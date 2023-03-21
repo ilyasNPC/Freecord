@@ -5,6 +5,7 @@
 
 #include <QChar>
 #include <QDebug>
+#include <QScrollBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,9 +13,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Temporary
+    ui->chatLog->clear();
     ui->treeWidget->clear();
     populate();
     ui->treeWidget->expandAll();
+
+    ui->chatLog->verticalScrollBar()->setValue(ui->chatLog->verticalScrollBar()->maximum());
+
+    // Make sure the chat log stays at the bottom as new messages are added
+    connect(ui->chatLog->document(), &QTextDocument::contentsChanged, [=]() {
+        ui->chatLog->verticalScrollBar()->setValue(ui->chatLog->verticalScrollBar()->maximum());
+    });
 
     QPixmap pix("..\\imgs\\LeikaMiniBanner.png"); // Default logo for now, later change it to custom for servers
     pix.scaled(100, 100, Qt::KeepAspectRatio);
@@ -130,5 +140,60 @@ void MainWindow::on_actionConnect_triggered()
     DialogConnect dacon;
     dacon.setModal(true);
     dacon.exec();
+}
+
+
+void MainWindow::on_textBox_returnPressed()
+{
+    QString message = ui->textBox->text();
+    if (message.length() <= 0)
+        return;
+
+    bool containsNonSpaceChar = false;
+
+    for (int i = 0; i < message.length(); i++) {
+        if (!message[i].isSpace()) {
+            containsNonSpaceChar = true;
+            break;
+        }
+    }
+
+    if (!containsNonSpaceChar)
+        return;
+
+    QDateTime current_time = QDateTime::currentDateTime();
+    QString formatted_time = current_time.toString("hh:mm:ss");
+
+    QString time = "[" + formatted_time + "] ";
+    QString role = "(Admin) ";
+    QString username = "ilyasNPC: ";
+
+    QTextCharFormat format;
+    QTextCursor cursor = ui->chatLog->textCursor();
+
+    cursor.movePosition(QTextCursor::End);
+
+    format.setFontWeight(QFont::Bold);
+    format.setForeground(QColor("#2B2BFF"));
+    cursor.setCharFormat(format);
+    cursor.insertText(time);
+
+    format.setFontWeight(QFont::Normal);
+
+    format.setForeground(QColor("#55AA2B"));
+    cursor.setCharFormat(format);
+    cursor.insertText(role);
+
+    format.setForeground(QColor("#FFAA00"));
+    cursor.setCharFormat(format);
+    cursor.insertText(username);
+
+    format.setForeground(QColor("#5A5A5A"));
+    cursor.setCharFormat(format);
+    cursor.insertText(message);
+
+    cursor.insertBlock();
+
+    ui->textBox->clear();
 }
 
