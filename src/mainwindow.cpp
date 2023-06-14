@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeWidget->clear();
     populate();
     ui->treeWidget->expandAll();
+    ui->treeWidget->header()->setSectionResizeMode(0, QHeaderView::Interactive);
+    ui->treeWidget->header()->setSectionResizeMode(1, QHeaderView::Interactive);
 
     ui->chatLog->verticalScrollBar()->setValue(ui->chatLog->verticalScrollBar()->maximum());
 
@@ -55,7 +57,7 @@ void MainWindow::populate()
     QJsonDocument json_doc = QJsonDocument::fromJson(file.readAll());
     file.close();
 
-
+    int imageWidth, imageHeight;
 
     QJsonArray json_array = json_doc.array();
     for (const QJsonValue& json_value : json_array) {
@@ -64,21 +66,44 @@ void MainWindow::populate()
         int type = json_obj.value("type").toInt();
 
         QTreeWidgetItem* item = new QTreeWidgetItem();
+        item->setText(0, name);
 
-        if (type == 1) {
-            QChar first = name.at(0);
-            if(name.contains(first)) {
-                name = QString(first).repeated(30);
+        switch(type) {
+            case 0: {
+                item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
+                item->setData(0, Qt::UserRole, QPixmap("../imgs/icons/nottalking.png"));
+                item->setTextAlignment(1, Qt::AlignRight | Qt::AlignVCenter);
+                item->setData(1, Qt::DecorationRole, QPixmap("../imgs/icons/nottalking.png").scaled(QSize(15, 15), Qt::KeepAspectRatio));
+                int imageWidth, imageHeight;
+                item->setSizeHint(1, QSize(imageWidth, imageHeight).scaled(QSize(15, 15), Qt::KeepAspectRatio));
+                ui->treeWidget->setColumnWidth(1, 15);
+                break;
             }
-            //item->setData(0, Qt::TextWordWrap, QVariant(Qt::TextWrapAnywhere));
+            case 1: {
+                QChar first = name.at(0);
+                if(name.contains(first)) {
+                    name = QString(first).repeated(30);
+                }
+                //item->setData(0, Qt::TextWordWrap, QVariant(Qt::TextWrapAnywhere));
+                break;
+            }
         }
 
 
-        item->setText(0, name);
+
 
         //item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextFlag::TextWrapAnywhere);
         switch (type) {
-            case 0: item->setIcon(0, QIcon("../imgs/icons/nottalking.png")); break;
+            //case 0: item->setIcon(0, QIcon("../imgs/icons/nottalking.png")); break;
+            case 0: {
+                item->setIcon(0, QIcon("../imgs/icons/nottalking.png"));
+                item->setTextAlignment(0, Qt::AlignLeft | Qt::AlignVCenter);
+                item->setTextAlignment(1, Qt::AlignRight | Qt::AlignVCenter);
+                item->setData(1, Qt::DecorationRole, QPixmap("../imgs/icons/nottalking.png").scaled(QSize(15, 15), Qt::KeepAspectRatio));
+                item->setSizeHint(1, QSize(imageWidth, imageHeight).scaled(QSize(15, 15), Qt::KeepAspectRatio));
+                ui->treeWidget->setColumnWidth(1, 15);
+                break;
+            }
             case 2: {
 
                     if(json_obj.value("password").toString().length() > 2) {
@@ -95,6 +120,9 @@ void MainWindow::populate()
             populateTreeWidget(item, children);
         }
         ui->treeWidget->addTopLevelItem(item);
+        //ui->treeWidget->setColumnWidth(1, imageWidth);
+        item->setSizeHint(1, QSize(15, 15));
+        ui->treeWidget->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     }
 }
 
@@ -126,6 +154,7 @@ void MainWindow::populateTreeWidget(QTreeWidgetItem* parentItem, const QJsonArra
             populateTreeWidget(item, children);
         }
     }
+    ui->treeWidget->setColumnWidth(1, 15);
 }
 
 void MainWindow::on_actionQuit_triggered() { this->close(); }
